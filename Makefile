@@ -4,7 +4,6 @@ OBJ = simulated_annealing.o utils.o
 EXEC_NAME = simulated_annealing
 
 all : delete $(EXEC_NAME) clean
-	$(EXEC_NAME)
 
 delete : 
 	@rm -f $(EXEC_NAME)
