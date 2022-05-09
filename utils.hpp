@@ -17,6 +17,8 @@ void delete_graph(int** graph, int n);
 
 void display_graph(int** graph, int n);
 
+void write_in_file(vector<int> path, int weight, const string instance, const string method);
+
 string get_instance(string path);
 
 #endif

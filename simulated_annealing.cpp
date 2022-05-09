@@ -55,27 +55,18 @@ vector<int> candidate_solution(vector<int> path, SolutionType type){
     }
 }
 
-vector<int> simulated_annealing(const string path, mt19937& gen, bool& error){
+vector<int> simulated_annealing(int** graph, int n, const string path, mt19937& gen, bool& error){
     if(path.length() <= 0){
         error=true;
         return {};
     }
 
-    int n = 0;
-    int** graph = create_graph(path, &n);
     if(graph == nullptr){
         error=true;
         return {};
     }
 
     /* DEBUG */ //display_graph(graph, n);
-  
-    string instance = get_instance(path);
-    if(instance.length() <= 0){
-        error=true;
-        return {};
-    }
-
     /* DEBUG */ //cout << "Input name: " << instance << endl << endl;
 
     /* Simulated Annealing - Parameters
@@ -91,8 +82,8 @@ vector<int> simulated_annealing(const string path, mt19937& gen, bool& error){
 
     vector<int> s = random_solution(N, gen);
 
-    /* DEBUG */ cout << "Initial: ";
-    /* DEBUG */ print_vector(s);
+    /* DEBUG */ //cout << "Initial: ";
+    /* DEBUG */ //print_vector(s);
 
     double t = T0;
     int e = cost(graph, s);
@@ -114,21 +105,26 @@ vector<int> simulated_annealing(const string path, mt19937& gen, bool& error){
             frozen=true;
     }
 
-    /* DEBUG */ cout << "Final (energy:" << e << "): ";
-    /* DEBUG */ print_vector(s);
-
-    delete_graph(graph, n);
+    /* DEBUG */ //cout << "Final (energy:" << e << "): ";
+    /* DEBUG */ //print_vector(s);
 
     return s;
 }
 
-int main(){
-    
-    mt19937 gen(time(nullptr));
+int main(int argc, const char* argv[]){
 
-    const string path = "instances/10_100.in";
+    if(argc<2) return -1;
+
+    mt19937 gen(time(nullptr));
+    const string path = argv[1];
     bool error = false;
-    vector<int> out = simulated_annealing(path, gen, error);
+    int n;
+
+    int** graph = create_graph(path, &n);
+    vector<int> f_path = simulated_annealing(graph, n, path, gen, error);
+    write_in_file(f_path, cost(graph, f_path), get_instance(path), "sim_annealing");
+
+    delete_graph(graph, n);
 
     return 0;
 }

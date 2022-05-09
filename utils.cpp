@@ -58,6 +58,22 @@ void display_graph(int** graph, int n){
     cout << endl;
 }
 
+void write_in_file(vector<int> path, int weight, const string instance, const string method){
+    string name = instance+"_"+method+".out";
+    ofstream out(name);
+    if(!out.is_open()) 
+        return;
+    int size = path.size();
+    for(int i = 0; i<size;i++){
+        out << path[i];
+        if(i!=size-1)
+            out << " ";
+    }
+    out << endl;
+    out << weight;
+    out.close();
+}
+
 string get_instance(string path){
     const regex query("/(.*).in$");
     smatch m;
