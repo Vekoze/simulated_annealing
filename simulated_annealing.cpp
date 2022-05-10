@@ -31,10 +31,10 @@ int cost(int** graph, const vector<int> path){
 }
 
 vector<int> random_solution(const int N, mt19937& gen){
-    vector<int> s(N);
-    iota(s.begin(), s.end(), 0);
-    shuffle(s.begin(), s.end(), gen);
-    s[N-1] = s[0];
+    vector<int> s(N+1);
+    iota(s.begin(), s.end()-1, 0);
+    shuffle(s.begin(), s.end()-1, gen);
+    s[N] = s[0];
     return s;
 }
 
