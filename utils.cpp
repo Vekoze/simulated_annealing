@@ -18,17 +18,19 @@ int** create_graph(const string path, int* n){
             }
         }
 
-        int i = 0;
+        size_t i = 0;
         while(getline(input, line)){
-            vector<int> numbers{};
-            unsigned int pos = 0;
-            while ((pos = line.find(' ')) != string::npos) {
-                numbers.push_back(stoi(line.substr(0, pos)));
-                line.erase(0, pos + 1);
+            vector<int> numbers(N);
+
+            string number;
+            stringstream ss(line);
+
+            size_t j = 0;
+            while(getline(ss,number,' ')){
+                graph[i][j] = stoi(number);
+                j++;
             }
-            for(size_t j = 0; j<numbers.size(); j++){
-                graph[i][j] = numbers.at(j);
-            }
+
             i++;
         }
 
