@@ -13,12 +13,6 @@
 #include <ctime>
 #include "utils.hpp"
 
-enum SolutionType {
-    Inverse,
-    Insert,
-    Swap,
-};
-
 int cost(int** graph, const vector<int> path){
     int cost = 0;
     int latest = path.at(0)-1;
@@ -38,21 +32,11 @@ vector<int> random_solution(const int N, mt19937& gen){
     return s;
 }
 
-vector<int> candidate_solution(vector<int> path, SolutionType type){
+vector<int> candidate_solution(vector<int> path){
     int size = path.size();
     pair<int,int> random_index = make_pair( rand()%(size-2) + 1 , rand()%(size-2) + 1 );
-
-    switch (type){
-    case Inverse:
-        return path;
-    case Insert:
-        return path;
-    case Swap:
-        swap(path[random_index.first], path[random_index.second]);
-        return path;
-    default:
-        return {};
-    }
+    swap(path[random_index.first], path[random_index.second]);
+    return path;
 }
 
 vector<int> simulated_annealing(int** graph, int n, const string path, mt19937& gen, bool& error){
@@ -92,7 +76,7 @@ vector<int> simulated_annealing(int** graph, int n, const string path, mt19937& 
 
     while(!frozen){
         for(int i = 0; i<MAX_ITER; i++){
-            vector<int> cs = candidate_solution(s, SolutionType::Swap);
+            vector<int> cs = candidate_solution(s);
             int ecs = cost(graph, cs);
             int delta = ecs - e;
             if(delta < 0 || dist(gen) <= exp(-delta/t)){
