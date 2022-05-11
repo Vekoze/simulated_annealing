@@ -21,9 +21,9 @@ enum SolutionType {
 
 int cost(int** graph, const vector<int> path){
     int cost = 0;
-    int latest = path.at(0);
+    int latest = path.at(0)-1;
     for(size_t i = 1; i<path.size(); i++){
-        int current = path.at(i);
+        int current = path.at(i)-1;
         cost += graph[latest][current];
         latest=current;
     }
@@ -32,7 +32,7 @@ int cost(int** graph, const vector<int> path){
 
 vector<int> random_solution(const int N, mt19937& gen){
     vector<int> s(N+1);
-    iota(s.begin(), s.end()-1, 0);
+    iota(s.begin(), s.end()-1, 1);
     shuffle(s.begin(), s.end()-1, gen);
     s[N] = s[0];
     return s;
@@ -107,7 +107,7 @@ vector<int> simulated_annealing(int** graph, int n, const string path, mt19937& 
 
     /* DEBUG */ //cout << "Final (energy:" << e << "): ";
     /* DEBUG */ //print_vector(s);
-
+    
     return s;
 }
 

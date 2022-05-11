@@ -66,9 +66,9 @@ void write_in_file(vector<int> path, int weight, const string instance, const st
     if(!out.is_open()) 
         return;
     int size = path.size();
-    for(int i = 0; i<size;i++){
+    for(int i = 0; i<size-1;i++){
         out << path[i];
-        if(i!=size-1)
+        if(i!=size-2)
             out << " ";
     }
     out << endl;
