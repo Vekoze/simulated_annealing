@@ -77,10 +77,6 @@ void write_in_file(vector<int> path, int weight, const string instance, const st
 }
 
 string get_instance(string path){
-    const regex query("/(.*).in$");
-    smatch m;
-    if(regex_search(path, m, query)){
-        return m[1];
-    }
-    return string();
+    string filename = path.substr(path.find_last_of("/\\") + 1);
+    return filename.substr(0, filename.find_last_of('.'));
 }
